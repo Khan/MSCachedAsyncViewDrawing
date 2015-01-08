@@ -34,6 +34,11 @@ typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
 - (instancetype)initWithCache:(id<MSCachedAsyncViewDrawingCache>)cache;
 
 /**
+ * @return a previously rendered image with `cacheKey` or `nil` if not available.
+ */
+- (UIImage *)cachedImageWithKey:(NSString *)cacheKey;
+
+/**
  * This method will call `drawBlock` _on a background thread_ passing a `CGRect` that you can pass to a `drawRect:` method
  * of a view or a layer.
  * Once finished, it'll call the completion block on the main thread with the drawn `UIImage` object.
