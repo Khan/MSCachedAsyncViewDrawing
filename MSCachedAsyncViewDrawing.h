@@ -11,6 +11,8 @@
 typedef void (^MSCachedAsyncViewDrawingDrawBlock)(CGRect frame);
 typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
 
+typedef id MSCachedAsyncViewDrawingCacheKeyType;
+
 @protocol MSCachedAsyncViewDrawingCache;
 
 @interface MSCachedAsyncViewDrawing : NSObject
@@ -36,7 +38,7 @@ typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
 /**
  * @return a previously rendered image with `cacheKey` or `nil` if not available.
  */
-- (UIImage *)cachedImageWithKey:(NSString *)cacheKey;
+- (UIImage *)cachedImageWithKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey;
 
 /**
  * This method will call `drawBlock` _on a background thread_ passing a `CGRect` that you can pass to a `drawRect:` method
@@ -44,14 +46,13 @@ typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
  * Once finished, it'll call the completion block on the main thread with the drawn `UIImage` object.
  * `MSCachedAsyncViewDrawing` objects keep an internal cache so multiple calls to this method with the same `cacheKey`
  * will result in the immediate call of `completionBlock`.
- * @param cacheKey make sure you create a string with the paremeters of the view. Two views configured
- * differently (say, different text or font color) should have different cache keys to avoid collisions)
+ * @param cacheKey make sure you create different keys to avoid collisions.
  * @param backgroundColor if you want a transparent image, just pass `[UIColor clearColor]`.
  * To generate an opaque image, pass a color with alpha = 1.
  * @param drawBlock this method is called from a background thread, so you must pay special attention to the thread safety of
  * anything you do in it. It's safe to use UIKit methods like `-[UIImage drawInRect:]` or `-[NSString drawInRect:]`.
  */
-- (void)drawViewAsyncWithCacheKey:(NSString *)cacheKey
+- (void)drawViewAsyncWithCacheKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey
                              size:(CGSize)imageSize
                   backgroundColor:(UIColor *)backgroundColor
                         drawBlock:(MSCachedAsyncViewDrawingDrawBlock)drawBlock
@@ -62,7 +63,7 @@ typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
  * It waits until the image is loaded and returns it instead of calling a completion block.
  * @param drawBlock is called on the caller thread.
  */
-- (UIImage *)drawViewSyncWithCacheKey:(NSString *)cacheKey
+- (UIImage *)drawViewSyncWithCacheKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey
                                  size:(CGSize)imageSize
                       backgroundColor:(UIColor *)backgroundColor
                             drawBlock:(MSCachedAsyncViewDrawingDrawBlock)drawBlock;
@@ -75,7 +76,7 @@ typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
 /**
  * @return `nil` if the image for `key` is not available.
  */
-- (UIImage *)imageForKey:(NSString *)key;
-- (void)setImage:(UIImage *)image forKey:(NSString *)key;
+- (UIImage *)imageForKey:(MSCachedAsyncViewDrawingCacheKeyType)key;
+- (void)setImage:(UIImage *)image forKey:(MSCachedAsyncViewDrawingCacheKeyType)key;
 
 @end

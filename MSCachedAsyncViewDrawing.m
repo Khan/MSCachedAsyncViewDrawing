@@ -76,7 +76,7 @@
 
 #pragma mark - Private
 
-- (void)drawViewWithCacheKey:(NSString *)cacheKey
+- (void)drawViewWithCacheKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey
                         size:(CGSize)imageSize
              backgroundColor:(UIColor *)backgroundColor
                    drawBlock:(MSCachedAsyncViewDrawingDrawBlock)drawBlock
@@ -153,13 +153,13 @@
 
 #pragma mark - Public
 
-- (UIImage *)cachedImageWithKey:(NSString *)cacheKey {
+- (UIImage *)cachedImageWithKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey {
 	NSParameterAssert(cacheKey);
 
 	return [self.cache imageForKey:cacheKey];
 }
 
-- (void)drawViewAsyncWithCacheKey:(NSString *)cacheKey
+- (void)drawViewAsyncWithCacheKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey
                              size:(CGSize)imageSize
                   backgroundColor:(UIColor *)backgroundColor
                         drawBlock:(MSCachedAsyncViewDrawingDrawBlock)drawBlock
@@ -173,7 +173,7 @@
                  waitUntilDone:NO];
 }
 
-- (UIImage *)drawViewSyncWithCacheKey:(NSString *)cacheKey
+- (UIImage *)drawViewSyncWithCacheKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey
                                  size:(CGSize)imageSize
                       backgroundColor:(UIColor *)backgroundColor
                             drawBlock:(MSCachedAsyncViewDrawingDrawBlock)drawBlock
@@ -223,12 +223,12 @@
     return self;
 }
 
-- (UIImage *)imageForKey:(NSString *)key
+- (UIImage *)imageForKey:(MSCachedAsyncViewDrawingCacheKeyType)key
 {
     return [_cache objectForKey:key];
 }
 
-- (void)setImage:(UIImage *)image forKey:(NSString *)key
+- (void)setImage:(UIImage *)image forKey:(MSCachedAsyncViewDrawingCacheKeyType)key
 {
     [_cache setObject:image forKey:key];
 }
