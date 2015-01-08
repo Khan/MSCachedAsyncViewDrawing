@@ -83,7 +83,11 @@
              completionBlock:(MSCachedAsyncViewDrawingCompletionBlock)completionBlock
                waitUntilDone:(BOOL)waitUntilDone
 {
-    UIImage *cachedImage = [self.cache imageForKey:cacheKey];
+	NSParameterAssert(cacheKey);
+	NSParameterAssert(drawBlock);
+	NSParameterAssert(completionBlock);
+
+	UIImage *cachedImage = [self cachedImageWithKey:cacheKey];
 
     if (cachedImage)
     {
@@ -148,6 +152,12 @@
 }
 
 #pragma mark - Public
+
+- (UIImage *)cachedImageWithKey:(NSString *)cacheKey {
+	NSParameterAssert(cacheKey);
+
+	return [self.cache imageForKey:cacheKey];
+}
 
 - (void)drawViewAsyncWithCacheKey:(NSString *)cacheKey
                              size:(CGSize)imageSize
