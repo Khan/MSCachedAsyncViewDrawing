@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 typedef void (^MSCachedAsyncViewDrawingDrawBlock)(CGRect frame);
 typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
