@@ -6,7 +6,10 @@
 //
 //
 
+
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef void (^MSCachedAsyncViewDrawingDrawBlock)(CGRect frame);
 typedef void (^MSCachedAsyncViewDrawingCompletionBlock)(UIImage *drawnImage);
@@ -38,7 +41,7 @@ typedef id MSCachedAsyncViewDrawingCacheKeyType;
 /**
  * @return a previously rendered image with `cacheKey` or `nil` if not available.
  */
-- (UIImage *)cachedImageWithKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey;
+- (UIImage * _Nullable)cachedImageWithKey:(MSCachedAsyncViewDrawingCacheKeyType)cacheKey;
 
 /**
  * This method will call `drawBlock` _on a background thread_ passing a `CGRect` that you can pass to a `drawRect:` method
@@ -76,7 +79,9 @@ typedef id MSCachedAsyncViewDrawingCacheKeyType;
 /**
  * @return `nil` if the image for `key` is not available.
  */
-- (UIImage *)imageForKey:(MSCachedAsyncViewDrawingCacheKeyType)key;
+- (UIImage * _Nullable)imageForKey:(MSCachedAsyncViewDrawingCacheKeyType)key;
 - (void)setImage:(UIImage *)image forKey:(MSCachedAsyncViewDrawingCacheKeyType)key;
 
 @end
+
+NS_ASSUME_NONNULL_END
